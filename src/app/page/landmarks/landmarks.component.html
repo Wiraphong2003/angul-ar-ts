@@ -1,0 +1,89 @@
+<div class="mat-label-SS">
+    <mat-label>หมายเลขสถานที่</mat-label>
+    <input #id matInput type="number" style="margin-left: 10px;width: 50px;height: 30px"
+        (keydown.enter)="Search(id.value)" />
+    <button mat-raised-button color="primary" style="margin-left: 10px;height: 30px;font-family: 'Prompt',sans-serif;"
+        (click)="Search(id.value)">
+        ค้นหา
+    </button>
+    <mat-label style="margin-left: 100px;">เลือกประเทศ</mat-label>
+    <select name="country" style="margin-left: 10px;height: 30px;" [(ngModel)]="country"
+        (ngModelChange)="searchByContry()">
+        <option selected>{{this.countries[0]}}</option>
+        <option>{{this.countries[1]}}</option>
+        <option>{{this.countries[2]}}</option>
+    </select>
+</div>
+
+
+<!-- การแสดงผลหนึ่งสถานที่ -->
+<div style="
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: center;
+" *ngIf="this.isMultiple == false;else showMultiple">
+    <div style="
+        margin-top: 20px;
+        display: flex;
+        position: relative;
+        justify-content: start;
+        margin-left: 200px;
+        margin-right: 200px;
+        background-color: antiquewhite;
+    ">
+
+        <div class="shrink" (click)="selectCountry(this.landmark)">
+            <img src="{{this.landmark.url}}" alt="image" width="400px">
+        </div>
+        <div style="display: flex; position:relative; flex-direction: column;">
+            <div style="margin-left: 20px; margin-top: 10px;">
+                <span style="font-size: 30px;">{{this.landmark.name}}</span>
+            </div>
+            <div style="margin-left: 20px;margin-top: 10px;">
+                {{this.landmark.country}}
+            </div>
+            <div style="margin-left: 20px; margin-top: 5px;">
+                {{this.landmark.detail}}
+            </div>
+        </div>
+
+
+    </div>
+</div><!-- การแสดงผลหนึ่งสถานที่ -->
+
+
+<ng-template #showMultiple>
+<div style="display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: center;"
+    *ngFor = "let place of this.landmaeksByCountry"
+>
+<div style="
+    margin-top: 20px;
+    display: flex;
+    position: relative;
+    justify-content: start;
+    margin-left: 200px;
+    margin-right: 200px;
+    background-color: antiquewhite;
+">
+
+            <div class="shrink" (click) ="selectCountry(place)">
+                <img src="{{place.url}}" alt="" width="400px" />
+            </div>
+            <div style="display: flex;position: relative;flex-direction: column;">
+                <div style="margin-left: 20px; margin-top: 10px;">
+                    <span style="font-size: 30px;">{{place.name}}</span>
+                </div>
+                <div style="margin-left: 20px;margin-top: 10px;">
+                    {{place.country}}
+                </div>
+                <div style="margin-left: 20px; margin-top: 5px;">
+                    {{place.detail}}
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
